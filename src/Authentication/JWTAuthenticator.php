@@ -200,7 +200,7 @@ class JWTAuthenticator extends MemberAuthenticator
         }
 
         // Build key from path
-        return InMemory::file('file://' . $path, $password);
+        return InMemory::file('file://' . $path, $password ?? '');
     }
 
     /**
