@@ -4,20 +4,18 @@
     "type": "silverstripe-vendormodule",
     "license": "bsd-3-clause",
     "require": {
-        "php": ">=7.1",
-        "silverstripe/framework": "^5",
-        "silverstripe/graphql": "^4.0 || ^5",
+        "php": "^8.3",
+        "silverstripe/framework": "^6.0",
+        "silverstripe/graphql": "^6.0",
         "lcobucci/jwt": "^4.0.4",
         "ext-json": "*"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.4 || ^3",
-        "phpunit/phpunit": "^9.6.13 || ^10.0",
-        "scriptfusion/phpunit-immediate-exception-printer": "^2 || ^3"
+        "phpunit/phpunit": "^11.0"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.x-dev"
+            "dev-silverstripe-6": "4.0.x-dev"
         },
         "installer-name": "graphql-jwt"
     },

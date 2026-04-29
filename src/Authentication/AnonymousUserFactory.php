@@ -4,7 +4,7 @@ namespace Firesphere\GraphQLJWT\Authentication;
 
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Factory;
-use SilverStripe\ORM\ValidationException;
+use SilverStripe\Core\Validation\ValidationException;
 use SilverStripe\Security\Member;
 
 class AnonymousUserFactory implements Factory
