@@ -29,7 +29,7 @@ class AnonymousUserAuthenticator extends MemberAuthenticator
         return Authenticator::LOGIN | Authenticator::LOGOUT;
     }
 
-    public function authenticate(array $data, HTTPRequest $request, ValidationResult &$result = null): ?Member
+    public function authenticate(array $data, HTTPRequest $request, ?ValidationResult &$result = null): ?Member
     {
         // Only applies to request for anonymous user specifically
         $email = $data['Email'] ?? null;
@@ -49,7 +49,7 @@ class AnonymousUserAuthenticator extends MemberAuthenticator
      * @param Member $member This third parameter is used in the CMSAuthenticator(s)
      * @return Member Found member, regardless of successful login
      */
-    protected function authenticateMember($data, ValidationResult &$result = null, Member $member = null): Member
+    protected function authenticateMember($data, ?ValidationResult &$result = null, ?Member $member = null): Member
     {
         // Get user, or create if not exists
         $username = static::config()->get('anonymous_username');
@@ -69,7 +69,7 @@ class AnonymousUserAuthenticator extends MemberAuthenticator
         return $member;
     }
 
-    public function checkPassword(Member $member, $password, ValidationResult &$result = null)
+    public function checkPassword(Member $member, $password, ?ValidationResult &$result = null)
     {
         throw new BadMethodCallException("checkPassword not supported for anonymous users");
     }
