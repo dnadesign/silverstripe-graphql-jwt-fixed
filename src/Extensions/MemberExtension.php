@@ -4,7 +4,7 @@ namespace Firesphere\GraphQLJWT\Extensions;
 
 use Firesphere\GraphQLJWT\Model\JWTRecord;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\ORM\HasManyList;
 use SilverStripe\Security\Member;
 use stdClass;
@@ -16,7 +16,7 @@ use stdClass;
  * @property Member|MemberExtension $owner
  * @method HasManyList|JWTRecord[] AuthTokens()
  */
-class MemberExtension extends DataExtension
+class MemberExtension extends Extension
 {
     /**
      * List of names of extra subject fields to add to JWT token
@@ -34,7 +34,7 @@ class MemberExtension extends DataExtension
         'AuthTokens' => JWTRecord::class,
     ];
 
-    public function updateCMSFields(FieldList $fields)
+    protected function updateCMSFields(FieldList $fields): void
     {
         $fields->removeByName('AuthTokens');
     }
@@ -51,13 +51,13 @@ class MemberExtension extends DataExtension
         $extraFields = Member::config()->get('jwt_subject_fields');
 
         $data->type = 'member';
-        $data->id = $this->owner->ID;
-        $data->userName = $this->owner->$identifier;
+        $data->id = $this->getOwner()->ID;
+        $data->userName = $this->getOwner()->$identifier;
 
         if (is_array($extraFields)) {
             foreach ($extraFields as $field) {
                 $dataField = lcfirst($field);
-                $data->$dataField = $this->owner->$field;
+                $data->$dataField = $this->getOwner()->$field;
             }
         }
 
@@ -71,9 +71,9 @@ class MemberExtension extends DataExtension
      */
     public function destroyAuthTokens(): Member
     {
-        foreach ($this->owner->AuthTokens() as $token) {
+        foreach ($this->getOwner()->AuthTokens() as $token) {
             $token->delete();
         }
-        return $this->owner;
+        return $this->getOwner();
     }
 }

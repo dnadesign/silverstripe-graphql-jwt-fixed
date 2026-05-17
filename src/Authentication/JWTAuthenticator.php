@@ -39,8 +39,8 @@ use SilverStripe\Core\Environment;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBDatetime;
-use SilverStripe\ORM\ValidationException;
-use SilverStripe\ORM\ValidationResult;
+use SilverStripe\Core\Validation\ValidationException;
+use SilverStripe\Core\Validation\ValidationResult;
 use SilverStripe\Security\Authenticator;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\MemberAuthenticator\MemberAuthenticator;
@@ -108,7 +108,7 @@ class JWTAuthenticator extends MemberAuthenticator
      */
     private $config;
 
-    public function __construct(Configuration $config = null)
+    public function __construct(?Configuration $config = null)
     {
 
         $this->config = $config ?? Configuration::forSymmetricSigner($this->getSigner(), $this->getPrivateKey());
@@ -189,7 +189,7 @@ class JWTAuthenticator extends MemberAuthenticator
      * @param string|null $password Optional password
      * @return Key
      */
-    private function makeKey(string $name, string $password = null): Key
+    private function makeKey(string $name, ?string $password = null): Key
     {
         $key = $this->getEnv($name);
         $path = $this->resolvePath($key);
@@ -200,7 +200,7 @@ class JWTAuthenticator extends MemberAuthenticator
         }
 
         // Build key from path
-        return InMemory::file('file://' . $path, $password);
+        return InMemory::file('file://' . $path, $password ?? '');
     }
 
     /**
@@ -222,7 +222,7 @@ class JWTAuthenticator extends MemberAuthenticator
      * @throws BadMethodCallException
      * @throws Exception
      */
-    public function authenticate(array $data, HTTPRequest $request, ValidationResult &$result = null): ?Member
+    public function authenticate(array $data, HTTPRequest $request, ?ValidationResult &$result = null): ?Member
     {
         if (!$result) {
             $result = new ValidationResult();

@@ -47,7 +47,7 @@ trait MemberTokenGenerator
      * @param string $token
      * @return array Response in format required by MemberToken
      */
-    protected static function generateResponse(string $status, Member $member = null, string $token = null): array
+    protected static function generateResponse(string $status, ?Member $member = null, ?string $token = null): array
     {
         // Success response
         $valid = $status === Resolver::STATUS_OK;
