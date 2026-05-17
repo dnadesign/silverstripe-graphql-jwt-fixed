@@ -18,7 +18,7 @@ use SilverStripe\Core\Injector\Injector;
 use OutOfBoundsException;
 use BadMethodCallException;
 use Exception;
-use SilverStripe\Core\Validation\ValidationResult;
+use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Security\Authenticator;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
